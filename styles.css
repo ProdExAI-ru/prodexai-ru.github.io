@@ -851,6 +851,46 @@ footer small {
   color: var(--text-muted);
 }
 
+.faq-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.faq-list details {
+  padding: 18px 24px;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  box-shadow: var(--shadow-card);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.faq-list details:hover {
+  border-color: rgba(116, 104, 255, 0.6);
+  transform: translateY(-2px);
+}
+
+.faq-list summary {
+  font-weight: 600;
+  font-size: 1.05rem;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq-list summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-list details[open] summary {
+  color: var(--accent);
+}
+
+.faq-list p {
+  margin: 12px 0 0;
+  color: var(--text-secondary);
+}
+
 @media (max-width: 960px) {
   .team-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1030,6 +1070,19 @@ footer small {
   .footer-links,
   .footer-menu {
     align-items: center;
+  }
+
+  .faq-list {
+    margin-top: 24px;
+    gap: 14px;
+  }
+
+  .faq-list details {
+    padding: 16px 18px;
+  }
+
+  .faq-list summary {
+    font-size: 1rem;
   }
 
   .cases-title-break {
