@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <section class="status-page" aria-labelledby="status-page-title">
+    <div class="status-page-content">
+      <span class="status-kicker">страница в разработке</span>
+      <h1 id="status-page-title">Мы готовим этот раздел</h1>
+      <p>
+        Совсем скоро здесь появится подробная информация. Мы работаем над тем, чтобы поделиться контентом,
+        который будет полезен вашей команде.
+      </p>
+      <div class="status-page-actions">
+        <a class="btn-primary" href="{{ "/" | relLangURL }}" data-go-back>Вернуться назад</a>
+        <a class="btn-secondary" href="{{ "/" | relLangURL }}">На главную</a>
+      </div>
+    </div>
+  </section>
+{{ end }}

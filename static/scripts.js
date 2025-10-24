@@ -8,10 +8,25 @@
   const navBackdrop = document.querySelector('[data-nav-backdrop]');
   const navLinksContainer = nav.querySelector('.nav-links');
   const mediaQuery = window.matchMedia('(max-width: 767px)');
+  const hoverMediaQuery = window.matchMedia('(hover: hover)');
 
   if (!navToggle) return;
 
+  let hoverCloseTimeoutId = null;
+
+  const clearHoverClose = () => {
+    if (hoverCloseTimeoutId === null) return;
+    window.clearTimeout(hoverCloseTimeoutId);
+    hoverCloseTimeoutId = null;
+  };
+
+  const openDropdown = () => {
+    dropdown?.classList.add('is-open');
+    dropdownToggle?.setAttribute('aria-expanded', 'true');
+  };
+
   const closeDropdown = () => {
+    clearHoverClose();
     dropdown?.classList.remove('is-open');
     dropdownToggle?.setAttribute('aria-expanded', 'false');
   };
@@ -89,6 +104,27 @@
     scheduleAutoClose();
   });
 
+  const handleDropdownPointerEnter = () => {
+    if (!dropdown || mediaQuery.matches || !hoverMediaQuery.matches) return;
+    openDropdown();
+    clearHoverClose();
+  };
+
+  const handleDropdownPointerLeave = (event) => {
+    if (!dropdown || mediaQuery.matches || !hoverMediaQuery.matches) return;
+    const relatedTarget = event.relatedTarget;
+    if (relatedTarget instanceof Element && dropdown.contains(relatedTarget)) {
+      return;
+    }
+    clearHoverClose();
+    hoverCloseTimeoutId = window.setTimeout(() => {
+      closeDropdown();
+    }, 120);
+  };
+
+  dropdown?.addEventListener('pointerenter', handleDropdownPointerEnter);
+  dropdown?.addEventListener('pointerleave', handleDropdownPointerLeave);
+
   nav.querySelectorAll('.nav-links a').forEach((link) => {
     link.addEventListener('click', () => {
       if (!mediaQuery.matches) return;
@@ -153,8 +189,7 @@
     }
 
     if (dropdown?.classList.contains('is-open')) {
-      dropdown.classList.remove('is-open');
-      dropdownToggle?.setAttribute('aria-expanded', 'false');
+      closeDropdown();
       dropdownToggle?.focus();
     }
   });
@@ -207,4 +242,57 @@
 
   handleViewportChange();
   applyHeaderOffset();
+
+  const teamCards = document.querySelectorAll('.team-card');
+
+  if (teamCards.length > 0) {
+    const resetTeamCardHover = () => {
+      teamCards.forEach((card) => {
+        card.classList.remove('is-hovered');
+      });
+    };
+
+    const handleTeamCardPointerEnter = (event) => {
+      if (!hoverMediaQuery.matches) return;
+      const card = event.currentTarget;
+      if (!(card instanceof HTMLElement)) return;
+      card.classList.add('is-hovered');
+    };
+
+    const handleTeamCardPointerLeave = (event) => {
+      const card = event.currentTarget;
+      if (!(card instanceof HTMLElement)) return;
+      card.classList.remove('is-hovered');
+    };
+
+    teamCards.forEach((card) => {
+      card.addEventListener('pointerenter', handleTeamCardPointerEnter);
+      card.addEventListener('pointerleave', handleTeamCardPointerLeave);
+      card.addEventListener('pointercancel', handleTeamCardPointerLeave);
+    });
+
+    const handleHoverCapabilityChange = (event) => {
+      if (!event.matches) {
+        resetTeamCardHover();
+        closeDropdown();
+      }
+    };
+
+    if (typeof hoverMediaQuery.addEventListener === 'function') {
+      hoverMediaQuery.addEventListener('change', handleHoverCapabilityChange);
+    } else if (typeof hoverMediaQuery.addListener === 'function') {
+      hoverMediaQuery.addListener(handleHoverCapabilityChange);
+    }
+  }
+
+  document.querySelectorAll('[data-go-back]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      if (window.history.length <= 1) {
+        return;
+      }
+
+      event.preventDefault();
+      window.history.back();
+    });
+  });
 })();

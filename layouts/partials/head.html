@@ -1,0 +1,52 @@
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      {{- if .IsHome -}}
+        {{- site.Title -}}
+      {{- else -}}
+        {{- printf "%s | %s" .Title site.Title -}}
+      {{- end -}}
+    </title>
+    {{ with site.Params.description }}
+      <meta name="description" content="{{ . }}" />
+    {{ end }}
+    {{ with site.Params.keywords }}
+      <meta name="keywords" content="{{ . }}" />
+    {{ end }}
+    {{ with site.Params.author }}
+      <meta name="author" content="{{ . }}" />
+    {{ end }}
+    <meta name="robots" content="index, follow" />
+    {{ with .Permalink }}
+      <link rel="canonical" href="{{ . }}" />
+      <meta property="og:url" content="{{ . }}" />
+    {{ end }}
+    <meta property="og:type" content="website" />
+    {{ with site.Params.ogLocale }}
+      <meta property="og:locale" content="{{ . }}" />
+    {{ end }}
+    <meta property="og:title" content="{{ site.Params.ogTitle | default site.Title }}" />
+    {{ with site.Params.ogDescription }}
+      <meta property="og:description" content="{{ . }}" />
+    {{ end }}
+    <meta property="og:site_name" content="{{ site.Params.ogSiteName | default site.Title }}" />
+    <meta name="twitter:card" content="{{ site.Params.twitterCard | default "summary" }}" />
+    <meta name="twitter:title" content="{{ site.Params.twitterTitle | default site.Title }}" />
+    {{ with site.Params.twitterDescription }}
+      <meta name="twitter:description" content="{{ . }}" />
+    {{ end }}
+    {{ with site.Params.twitterCreator }}
+      <meta name="twitter:creator" content="{{ . }}" />
+    {{ end }}
+    {{ with site.Params.twitterSite }}
+      <meta name="twitter:site" content="{{ . }}" />
+    {{ end }}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ "styles.css" | relURL }}" />
+    {{ partial "structured-data.html" . }}

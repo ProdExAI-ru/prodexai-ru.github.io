@@ -1,0 +1,45 @@
+    {{ $org := site.Params.organization }}
+    {{ $website := site.Params.website }}
+    {{ $faq := slice }}
+    {{ range site.Params.faq }}
+      {{ $faq = $faq | append (dict "@type" "Question" "name" .question "acceptedAnswer" (dict "@type" "Answer" "text" .answer)) }}
+    {{ end }}
+    {{ $graph := slice }}
+    {{ if $org }}
+      {{ $graph = $graph | append (dict
+        "@type" "Organization"
+        "name" $org.name
+        "url" $org.url
+        "description" $org.description
+        "email" $org.email
+        "sameAs" $org.sameAs
+        "contactPoint" (dict
+          "@type" "ContactPoint"
+          "contactType" $org.contactType
+          "email" $org.email
+          "areaServed" $org.areaServed
+          "availableLanguage" $org.availableLanguage
+        )
+      ) }}
+    {{ end }}
+    {{ if $website }}
+      {{ $graph = $graph | append (dict
+        "@type" "WebSite"
+        "url" $website.url
+        "name" $website.name
+        "alternateName" $website.alternateName
+        "description" $website.description
+        "inLanguage" $website.inLanguage
+      ) }}
+    {{ end }}
+    {{ with site.Params.faqURL }}
+      {{ $graph = $graph | append (dict
+        "@type" "FAQPage"
+        "url" .
+        "mainEntity" $faq
+      ) }}
+    {{ end }}
+    {{ $data := dict "@context" "https://schema.org" "@graph" $graph }}
+    <script type="application/ld+json">
+      {{ $data | jsonify (dict "indent" "  ") }}
+    </script>

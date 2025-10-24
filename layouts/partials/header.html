@@ -1,0 +1,40 @@
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="{{ "/" | relLangURL }}">PRODEX</a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="sr-only">Открыть меню</span>
+    </button>
+    <div class="nav-links" id="primary-navigation">
+      <a href="{{ "/" | relLangURL }}">Главная</a>
+      <div class="dropdown">
+        <button
+          class="dropdown-toggle"
+          type="button"
+          aria-expanded="false"
+          aria-haspopup="true"
+          aria-controls="nav-for-whom-menu"
+          id="nav-for-whom-toggle"
+        >
+          Для кого
+          <svg viewBox="0 0 12 12" aria-hidden="true">
+            <path d="M2.2 4.2a.7.7 0 0 1 .99-.1l2.81 2.38 2.81-2.38a.7.7 0 1 1 .9 1.08l-3.3 2.8a.7.7 0 0 1-.9 0l-3.3-2.8a.7.7 0 0 1-.1-.99Z" />
+          </svg>
+        </button>
+        <div class="dropdown-menu" id="nav-for-whom-menu" role="menu" aria-labelledby="nav-for-whom-toggle">
+          <a href="{{ "in-progress/" | relURL }}" role="menuitem">Собственникам и СЕО</a>
+          <a href="{{ "in-progress/" | relURL }}" role="menuitem">Директорам по развитию</a>
+          <a href="{{ "in-progress/" | relURL }}" role="menuitem">HR-директорам</a>
+          <a href="{{ "in-progress/" | relURL }}" role="menuitem">Консультантам и трекерам</a>
+          <a href="{{ "in-progress/" | relURL }}" role="menuitem">Университетам и акселераторам</a>
+        </div>
+      </div>
+      <a href="{{ "in-progress/" | relURL }}">Кейсы</a>
+      <a href="{{ "in-progress/" | relURL }}">Блог</a>
+      <a href="{{ "in-progress/" | relURL }}">Контакты</a>
+    </div>
+  </div>
+</nav>
+<div class="nav-backdrop" data-nav-backdrop aria-hidden="true"></div>
